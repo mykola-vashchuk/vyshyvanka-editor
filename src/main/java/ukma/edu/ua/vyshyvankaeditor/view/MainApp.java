@@ -2,22 +2,23 @@ package ukma.edu.ua.vyshyvankaeditor.view;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ukma.edu.ua.vyshyvankaeditor.controller.EditorController;
+import ukma.edu.ua.vyshyvankaeditor.model.GridData;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        // Головний контейнер нашого інтерфейсу
-        BorderPane root = new BorderPane();
+        GridData model = new GridData();
 
-        // Створюємо вікно розміром 900х600 пікселів
-        Scene scene = new Scene(root, 900, 600);
+        EditorUI view = new EditorUI();
 
-        // Встановлюємо обов'язковий заголовок програми з назвою та автором
+        EditorController controller = new EditorController(model, view);
+
+        Scene scene = new Scene(view.getRoot(), 900, 600);
+
         stage.setTitle("Піксельна вишивка. Редактор орнаменту — Микола Ващук");
-
         stage.setScene(scene);
         stage.show();
     }
