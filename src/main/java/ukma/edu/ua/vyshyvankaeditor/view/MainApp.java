@@ -16,7 +16,7 @@ public class MainApp extends Application {
 
         EditorController controller = new EditorController(model, view);
 
-        Scene scene = new Scene(view.getRoot(), 900, 600);
+        Scene scene = new Scene(view.getRoot(), 920, 670);
 
         stage.setTitle("Піксельна вишивка. Редактор орнаменту — Микола Ващук");
         stage.setScene(scene);

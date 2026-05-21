@@ -1,6 +1,7 @@
 module ukma.edu.ua.vyshyvankaeditor {
     requires javafx.controls;
     requires javafx.graphics;
+    requires java.desktop;
 
     opens ukma.edu.ua.vyshyvankaeditor.view to javafx.graphics;
 
