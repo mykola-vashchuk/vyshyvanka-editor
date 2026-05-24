@@ -31,9 +31,6 @@ public class GridData {
         }
     }
 
-    public void setCellColor(int x, int y, Color color) {
-        setCell(x, y, color, GridCellType.CROSS_STITCH);
-    }
 
     public GridCellType getCellType(int x, int y) {
         if (x >= 0 && x < width && y >= 0 && y < height) {

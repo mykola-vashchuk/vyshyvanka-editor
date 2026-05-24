@@ -14,16 +14,12 @@ public class MainApp extends Application {
 
         EditorUI view = new EditorUI();
 
-        EditorController controller = new EditorController(model, view);
+        new EditorController(model, view);
 
         Scene scene = new Scene(view.getRoot(), 935, 685);
 
         stage.setTitle("Піксельна вишивка. Редактор орнаменту — Микола Ващук");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

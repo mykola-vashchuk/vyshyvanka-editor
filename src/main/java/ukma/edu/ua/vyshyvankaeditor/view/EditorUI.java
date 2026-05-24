@@ -21,6 +21,7 @@ public class EditorUI {
     private CheckBox verSymetry;
     private Button clearButton;
     private Button saveButton;
+    private Button importButton;
     private ColorPicker colorPicker; // Глобальне поле класу
 
     private final int cellSize = 15;
@@ -70,9 +71,11 @@ public class EditorUI {
         toolbar.getChildren().add(new Label("Управління:"));
         clearButton = new Button("Очистити");
         saveButton = new Button("Зберегти PNG");
+        importButton = new Button("Імпорт PNG");
         clearButton.setMaxWidth(Double.MAX_VALUE);
         saveButton.setMaxWidth(Double.MAX_VALUE);
-        toolbar.getChildren().addAll(clearButton, saveButton);
+        importButton.setMaxWidth(Double.MAX_VALUE);
+        toolbar.getChildren().addAll(clearButton, saveButton, importButton);
 
         double canvasWidth = gridWidth * cellSize;
         double canvasHeight = gridHeight * cellSize;
@@ -89,11 +92,11 @@ public class EditorUI {
 
     public BorderPane getRoot() { return root; }
     public Canvas getCanvas() { return canvas; }
-    public GraphicsContext getGraphicsContext() { return gc; }
     public ColorPicker getColorPicker() { return colorPicker; }
     public Button getClearButton() { return clearButton; }
     public Button getSaveButton() { return saveButton; }
     public CheckBox getHorSymetry() { return horSymetry; }
     public CheckBox getVerSymetry() { return verSymetry; }
     public int getCellSize() { return cellSize; }
+    public Button getImportButton() { return importButton; }
 }
