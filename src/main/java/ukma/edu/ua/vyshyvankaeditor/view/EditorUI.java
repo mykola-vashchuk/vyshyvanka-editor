@@ -24,8 +24,8 @@ public class EditorUI {
     private ColorPicker colorPicker; // Глобальне поле класу
 
     private final int cellSize = 15;
-    private final int gridWidth = 40;
-    private final int gridHeight = 40;
+    private final int gridWidth = 41;
+    private final int gridHeight = 41;
 
     public EditorUI() {
         root = new BorderPane();

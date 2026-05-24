@@ -3,33 +3,48 @@ package ukma.edu.ua.vyshyvankaeditor.model;
 import javafx.scene.paint.Color;
 
 public class GridData {
-    private final int width = 40;
-    private final int height = 40;
+    private final int width = 41;
+    private final int height = 41;
 
-    private final Color[][] grid;
+    private final Color[][] gridColors;
+    private final GridCellType[][] gridTypes;
 
     public GridData() {
-        grid = new Color[width][height];
+        gridColors = new Color[width][height];
+        gridTypes = new GridCellType[width][height];
         clearGrid();
     }
 
     public void clearGrid() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                grid[x][y] = Color.WHITE;
+                gridColors[x][y] = Color.WHITE;
+                gridTypes[x][y] = GridCellType.CROSS_STITCH;
             }
         }
     }
 
-    public void setCellColor(int x, int y, Color color) {
+    public void setCell(int x, int y, Color color, GridCellType type) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            grid[x][y] = color;
+            gridColors[x][y] = color;
+            gridTypes[x][y] = type;
         }
+    }
+
+    public void setCellColor(int x, int y, Color color) {
+        setCell(x, y, color, GridCellType.CROSS_STITCH);
+    }
+
+    public GridCellType getCellType(int x, int y) {
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            return gridTypes[x][y];
+        }
+        return GridCellType.CROSS_STITCH;
     }
 
     public Color getCellColor(int x, int y) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            return grid[x][y];
+            return gridColors[x][y];
         }
         return Color.WHITE;
     }
