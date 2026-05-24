@@ -222,13 +222,14 @@ classDiagram
 # 6. Список комітів / код
 
 ## Останні коміти з репозиторію
-1. `adb2bb1` — `feat: add save and import functionality for PNG files in EditorController && test everything`
-2. `6ed096c` — `feat: implement 41x41 symmetry grid and precise Mykola embroidery pattern`
-3. `f7d1333` — `feat: add canvas drag handling and clear grid functionality in EditorController`
-4. `9b627d1` — `feat: implement canvas click handling and color selection in EditorUI`
-5. `32b04c0` — `feat: enhance EditorUI with toolbar, canvas, and grid drawing functionality`
-6. `2a5277e` — `feat: implement initial MVC structure with GridData model, EditorUI view, and EditorController`
-7. `21ce9fd` — `init: setup JavaFX project and basic MVC structure`
+`66b93d8` — `feat: add cell type selection functionality in EditorUI and update drawing logic in EditorController`
+`adb2bb1` — `feat: add save and import functionality for PNG files in EditorController && test everything`
+`6ed096c` — `feat: implement 41x41 symmetry grid and precise Mykola embroidery pattern`
+`f7d1333` — `feat: add canvas drag handling and clear grid functionality in EditorController`
+`9b627d1` — `feat: implement canvas click handling and color selection in EditorUI`
+`32b04c0` — `feat: enhance EditorUI with toolbar, canvas, and grid drawing functionality`
+`2a5277e` — `feat: implement initial MVC structure with GridData model, EditorUI view, and EditorController`
+`21ce9fd` — `init: setup JavaFX project and basic MVC structure`
 
 ## Що було реалізовано у коді
 - стартова JavaFX-структура проєкту;
