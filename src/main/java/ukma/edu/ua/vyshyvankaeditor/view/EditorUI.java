@@ -33,7 +33,7 @@ public class EditorUI {
         drawGrid();
     }
 
-    private void drawGrid() {
+    public void drawGrid() {
         double w = canvas.getWidth();
         double h = canvas.getHeight();
 

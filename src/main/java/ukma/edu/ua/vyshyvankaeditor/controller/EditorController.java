@@ -18,6 +18,13 @@ public class EditorController {
 
     private void initInteractions() {
         view.getCanvas().setOnMouseClicked(this::handleCanvasClick);
+
+        view.getCanvas().setOnMouseDragged(this::handleCanvasClick);
+
+        view.getClearButton().setOnAction(event -> {
+            model.clearGrid();
+            view.drawGrid();
+        });
     }
 
     private void handleCanvasClick(MouseEvent event) {
@@ -46,7 +53,7 @@ public class EditorController {
 
         if(!color.equals(Color.WHITE)) {
             gc.setStroke(color);
-            gc.setLineWidth(1.5);
+            gc.setLineWidth(1.75);
             double xLeft = x * size;
             double yTop = y * size;
             double xRight = (x + 1) * size;
