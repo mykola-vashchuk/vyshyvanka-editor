@@ -8,8 +8,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.*;
-
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,6 +21,7 @@ public class EditorUI {
     private CheckBox verSymetry;
     private Button clearButton;
     private Button saveButton;
+    private ColorPicker colorPicker; // Глобальне поле класу
 
     private final int cellSize = 15;
     private final int gridWidth = 40;
@@ -60,16 +59,16 @@ public class EditorUI {
         toolbar.setStyle("-fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;");
 
         toolbar.getChildren().add(new Label("Колір нитки:"));
-        ColorPicker colorPicker = new ColorPicker(Color.RED);
+        colorPicker = new ColorPicker(Color.RED);
         toolbar.getChildren().add(colorPicker);
 
-        toolbar.getChildren().add(new Label("Симетрія"));
+        toolbar.getChildren().add(new Label("Симетрія:"));
         horSymetry = new CheckBox("Горизонтальна");
         verSymetry = new CheckBox("Вертикальна");
-        toolbar.getChildren().addAll(horSymetry,  verSymetry);
+        toolbar.getChildren().addAll(horSymetry, verSymetry);
 
         toolbar.getChildren().add(new Label("Управління:"));
-        clearButton = new Button("Очмстити");
+        clearButton = new Button("Очистити");
         saveButton = new Button("Зберегти PNG");
         clearButton.setMaxWidth(Double.MAX_VALUE);
         saveButton.setMaxWidth(Double.MAX_VALUE);
@@ -85,12 +84,16 @@ public class EditorUI {
         canvasWrapper.setStyle("-fx-background-color: #e2e2e2;");
 
         root.setLeft(toolbar);
-        root.setCenter(canvas);
-
-
+        root.setCenter(canvasWrapper);
     }
 
-    public BorderPane getRoot() {
-        return root;
-    }
+    public BorderPane getRoot() { return root; }
+    public Canvas getCanvas() { return canvas; }
+    public GraphicsContext getGraphicsContext() { return gc; }
+    public ColorPicker getColorPicker() { return colorPicker; }
+    public Button getClearButton() { return clearButton; }
+    public Button getSaveButton() { return saveButton; }
+    public CheckBox getHorSymetry() { return horSymetry; }
+    public CheckBox getVerSymetry() { return verSymetry; }
+    public int getCellSize() { return cellSize; }
 }
