@@ -6,11 +6,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import ukma.edu.ua.vyshyvankaeditor.model.GridCellType;
 
 public class EditorUI {
     private final BorderPane root;
@@ -22,6 +24,7 @@ public class EditorUI {
     private Button clearButton;
     private Button saveButton;
     private Button importButton;
+    private ComboBox<GridCellType> cellTypePicker;
     private ColorPicker colorPicker; // Глобальне поле класу
 
     private final int cellSize = 15;
@@ -63,6 +66,13 @@ public class EditorUI {
         colorPicker = new ColorPicker(Color.RED);
         toolbar.getChildren().add(colorPicker);
 
+        toolbar.getChildren().add(new Label("Тип стібка:"));
+        cellTypePicker = new ComboBox<>();
+        cellTypePicker.getItems().addAll(GridCellType.values());
+        cellTypePicker.setValue(GridCellType.CROSS_STITCH);
+        cellTypePicker.setMaxWidth(Double.MAX_VALUE);
+        toolbar.getChildren().add(cellTypePicker);
+
         toolbar.getChildren().add(new Label("Симетрія:"));
         horSymetry = new CheckBox("Горизонтальна");
         verSymetry = new CheckBox("Вертикальна");
@@ -97,6 +107,7 @@ public class EditorUI {
     public Button getSaveButton() { return saveButton; }
     public CheckBox getHorSymetry() { return horSymetry; }
     public CheckBox getVerSymetry() { return verSymetry; }
+    public ComboBox<GridCellType> getCellTypePicker() { return cellTypePicker; }
     public int getCellSize() { return cellSize; }
     public Button getImportButton() { return importButton; }
 }

@@ -1,0 +1,251 @@
+# Титульна сторінка
+
+**Міністерство освіти і науки України**  
+**Національний університет "Києво-Могилянська академія"**  
+**Факультет інформатики**     
+**Дисципліна: "Практика Навчальна"**    
+**Проєкт: "Cтворення схем української вишивки засобами Java"**   
+
+## ЗВІТ
+
+**Ващук Микола**  
+**Студент 1 курсу НаУКМА**  
+**Факультет Інформатики**    
+**Спеціальність:  
+Інженерія програмного забезпечення, група 4**
+
+**Київ - 2026**
+---
+
+# Зміст
+1. Опис задачі  
+2. Можливості програми  
+3. Опис класів  
+4. UML-діаграма  
+5. Опис проблем і способів їх розв’язання  
+6. Список комітів / код  
+7. Висновок
+
+---
+
+# 1. Опис задачі
+Потрібно було створити JavaFX-додаток для побудови та редагування вишиваних схем. Програма повинна дозволяти користувачу малювати на сітці, задавати колір нитки, вмикати симетрію, очищати поле, а також зберігати та імпортувати зображення у форматі PNG.
+
+Проєкт реалізовано у вигляді MVC-архітектури:
+- **Model** — зберігання даних сітки та типів клітинок;
+- **View** — побудова графічного інтерфейсу;
+- **Controller** — обробка подій користувача та логіка збереження/імпорту.
+
+---
+
+# 2. Можливості програми
+Програма підтримує такі функції:
+
+- малювання по клітинках на полотні `Canvas`;
+- вибір кольору нитки через `ColorPicker`;
+- горизонтальна та вертикальна симетрія;
+- очищення сітки;
+- збереження поточної схеми у PNG;
+- імпорт PNG-зображення назад у програму;
+- відображення орнаменту імені на старті;
+- підтримка двох типів клітинок:
+  - `CROSS_STITCH`
+  - `FILLED_SQUARE`.
+
+---
+
+# 3. Опис класів
+
+## `Launcher`
+Точка входу в програму. Запускає JavaFX-додаток через `Application.launch(...)`.
+
+## `MainApp`
+Головний клас JavaFX-застосунку.
+- створює модель `GridData`;
+- створює вигляд `EditorUI`;
+- створює контролер `EditorController`;
+- формує `Scene` і показує вікно.
+
+## `EditorController`
+Контролер, який зв’язує інтерфейс і модель.
+Виконує такі функції:
+- обробка кліків мишкою по полотну;
+- малювання клітинок;
+- підтримка симетрії;
+- очищення сітки;
+- збереження схеми у PNG;
+- імпорт PNG-файлу;
+- перемальовування всієї сітки після змін.
+
+## `EditorUI`
+Клас представлення. Відповідає за побудову графічного інтерфейсу:
+- ліву панель інструментів;
+- `Canvas` для малювання;
+- кнопки керування;
+- `ColorPicker`;
+- `CheckBox` для симетрії.
+
+## `GridData`
+Модель даних.
+- зберігає кольори клітинок;
+- зберігає тип клітинки;
+- містить розмір сітки `41x41`;
+- реалізує очищення та доступ до значень.
+
+## `GridCellType`
+Перелік типів клітинок:
+- `CROSS_STITCH`;
+- `FILLED_SQUARE`.
+
+## `NameGenerator`
+Клас для побудови стартового орнаменту імені.
+- містить шаблон символів;
+- переносить шаблон у модель;
+- задає різні кольори та типи клітинок залежно від символу.
+
+---
+
+# 4. UML-діаграма
+Нижче наведено спрощену UML-діаграму у форматі Mermaid:
+
+```mermaid
+classDiagram
+    class Launcher {
+        +main(String[] args)
+    }
+
+    class MainApp {
+        +start(Stage stage)
+    }
+
+    class EditorController {
+        -GridData model
+        -EditorUI view
+        +EditorController(GridData, EditorUI)
+        +redrawWholeGrid()
+    }
+
+    class EditorUI {
+        -BorderPane root
+        -Canvas canvas
+        -ColorPicker colorPicker
+        -CheckBox horSymetry
+        -CheckBox verSymetry
+        -Button clearButton
+        -Button saveButton
+        -Button importButton
+        +getRoot()
+        +getCanvas()
+        +getColorPicker()
+        +getClearButton()
+        +getSaveButton()
+        +getImportButton()
+        +getHorSymetry()
+        +getVerSymetry()
+    }
+
+    class GridData {
+        -int width
+        -int height
+        -Color[][] gridColors
+        -GridCellType[][] gridTypes
+        +clearGrid()
+        +setCell(int, int, Color, GridCellType)
+        +getCellColor(int, int)
+        +getCellType(int, int)
+        +getWidth()
+        +getHeight()
+    }
+
+    class GridCellType {
+        <<enumeration>>
+        CROSS_STITCH
+        FILLED_SQUARE
+    }
+
+    class NameGenerator {
+        +applyNamePattern(GridData)
+    }
+
+    Launcher --> MainApp
+    MainApp --> EditorController
+    MainApp --> EditorUI
+    EditorController --> GridData
+    EditorController --> EditorUI
+    NameGenerator --> GridData
+    GridData --> GridCellType
+```
+
+---
+
+# 5. Опис проблем і способів їх розв’язання
+
+## 5.1. Відсутність `javac`
+Спочатку в системі був встановлений лише runtime Java, але не JDK. Через це Maven не міг компілювати проєкт.
+
+**Розв’язання:**
+- встановлено пакет `java-25-openjdk-devel`;
+- після цього з’явився компілятор `javac`;
+- збірка через Maven стала успішною.
+
+## 5.2. Неправильний модуль JavaFX
+Для збереження PNG використовувався `SwingFXUtils`, а модуль JavaFX Swing був підключений некоректно.
+
+**Розв’язання:**
+- у `module-info.java` та `pom.xml` було приведено залежності до правильного стану;
+- проєкт успішно компілюється.
+
+## 5.3. Імпорт PNG відкривав не той діалог
+Спочатку для імпорту використовувався діалог збереження замість діалогу відкриття.
+
+**Розв’язання:**
+- замінено `showSaveDialog(...)` на `showOpenDialog(...)`;
+- додано фільтр PNG;
+- перевірено, що файл читається коректно.
+
+## 5.4. Невизначена стартова папка у `FileChooser`
+Користувачу було складно знайти PNG-файли, бо діалог відкривався не в тій директорії.
+
+**Розв’язання:**
+- додано початкову директорію для `FileChooser`;
+- діалог відкривається в папці проєкту, де лежить тестовий PNG.
+
+## 5.5. Дрібні warning’и у коді
+Було кілька попереджень про невикористані методи та змінні.
+
+**Розв’язання:**
+- прибрано зайві елементи;
+- код став чистішим і зрозумілішим.
+
+---
+
+# 6. Список комітів / код
+
+## Останні коміти з репозиторію
+1. `adb2bb1` — `feat: add save and import functionality for PNG files in EditorController && test everything`
+2. `6ed096c` — `feat: implement 41x41 symmetry grid and precise Mykola embroidery pattern`
+3. `f7d1333` — `feat: add canvas drag handling and clear grid functionality in EditorController`
+4. `9b627d1` — `feat: implement canvas click handling and color selection in EditorUI`
+5. `32b04c0` — `feat: enhance EditorUI with toolbar, canvas, and grid drawing functionality`
+6. `2a5277e` — `feat: implement initial MVC structure with GridData model, EditorUI view, and EditorController`
+7. `21ce9fd` — `init: setup JavaFX project and basic MVC structure`
+
+## Що було реалізовано у коді
+- стартова JavaFX-структура проєкту;
+- MVC-архітектура;
+- полотно для малювання;
+- підтримка кольору та симетрії;
+- генерація орнаменту імені;
+- експорт PNG;
+- імпорт PNG;
+- очищення сітки.
+
+---
+
+# 7. Висновок
+У результаті було створено повноцінний JavaFX-редактор вишиваних схем із графічним інтерфейсом, підтримкою симетрії, збереженням у PNG та імпортом зображень. Проєкт організовано за принципом MVC, що робить код зрозумілим і зручним для подальшого розвитку.
+
+---
+
+**Додаток:** у корені проєкту також є файл-зображення `mykola.png`, який може використовуватись як приклад або тестовий ресурс.
+

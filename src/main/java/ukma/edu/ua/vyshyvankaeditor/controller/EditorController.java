@@ -143,8 +143,8 @@ public class EditorController {
     }
 
     private void drawAndSaveCell(int x, int y, Color color) {
-        GridCellType currentType = (y >= model.getHeight() - 5) ? GridCellType.FILLED_SQUARE : GridCellType.CROSS_STITCH;
-        model.setCell(x, y, color, currentType);
+        GridCellType selectedType = view.getCellTypePicker().getValue();
+        model.setCell(x, y, color, selectedType);
         drawCell(x, y, color);
     }
 
