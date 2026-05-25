@@ -1,5 +1,6 @@
 package ukma.edu.ua.vyshyvankaeditor.controller;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,6 +13,7 @@ import ukma.edu.ua.vyshyvankaeditor.view.EditorUI;
 public class EditorController {
     private GridData model;
     private final EditorUI view;
+    private boolean sidebarVisible = true;
 
     public EditorController(GridData model, EditorUI view) {
         this.model = model;
@@ -25,6 +27,12 @@ public class EditorController {
     private void initInteractions() {
         view.getCanvas().setOnMouseClicked(this::handleCanvasClick);
         view.getCanvas().setOnMouseDragged(this::handleCanvasClick);
+
+        view.getToggleSidebarButton().setOnAction(event -> {
+            sidebarVisible = !sidebarVisible;
+            view.setSidebarVisible(sidebarVisible);
+            view.getToggleSidebarButton().setText(sidebarVisible ? "Сховати панель" : "Показати панель");
+        });
 
         view.getClearButton().setOnAction(event -> {
             model.clearGrid();
@@ -46,6 +54,14 @@ public class EditorController {
         });
 
         view.getDuplicateButton().setOnAction(event -> duplicatePattern());
+
+        view.getZoomInButton().setOnAction(event -> view.zoomBy(1.1));
+        view.getZoomOutButton().setOnAction(event -> view.zoomBy(1.0 / 1.1));
+        view.getPanUpButton().setOnAction(event -> view.panBy(0, -20));
+        view.getPanDownButton().setOnAction(event -> view.panBy(0, 20));
+        view.getPanLeftButton().setOnAction(event -> view.panBy(-20, 0));
+        view.getPanRightButton().setOnAction(event -> view.panBy(20, 0));
+        view.getResetViewButton().setOnAction(event -> view.resetView());
 
         view.getSaveButton().setOnAction(event -> {
             javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
@@ -99,6 +115,7 @@ public class EditorController {
 
                     model.clearGrid();
                     int size = view.getCellSize();
+                    GridCellType importType = view.getCellTypePicker().getValue();
 
                     for (int x = 0; x < model.getWidth(); x++) {
                         for (int y = 0; y < model.getHeight(); y++) {
@@ -114,8 +131,7 @@ public class EditorController {
                                 Color fxColor = Color.rgb(r, g, b);
 
                                 if (!fxColor.equals(Color.WHITE) && !(r > 200 && g > 200 && b > 200 && Math.abs(r - g) < 5)) {
-                                    GridCellType restoredType = (y >= model.getHeight() - 5) ? GridCellType.FILLED_SQUARE : GridCellType.CROSS_STITCH;
-                                    model.setCell(x, y, fxColor, restoredType);
+                                    model.setCell(x, y, fxColor, importType);
                                 }
                             }
                         }
@@ -169,8 +185,9 @@ public class EditorController {
     }
 
     private void handleCanvasClick(MouseEvent event) {
-        double mouseX = event.getX();
-        double mouseY = event.getY();
+        Point2D localPoint = view.getCanvas().sceneToLocal(event.getSceneX(), event.getSceneY());
+        double mouseX = localPoint.getX();
+        double mouseY = localPoint.getY();
 
         int x = (int) (mouseX / view.getCellSize());
         int y = (int) (mouseY / view.getCellSize());
