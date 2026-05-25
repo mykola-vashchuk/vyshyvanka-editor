@@ -3,15 +3,21 @@ package ukma.edu.ua.vyshyvankaeditor.model;
 import javafx.scene.paint.Color;
 
 public class GridData {
-    private final int width = 41;
-    private final int height = 41;
+    private final int width;
+    private final int height;
 
     private final Color[][] gridColors;
     private final GridCellType[][] gridTypes;
 
     public GridData() {
-        gridColors = new Color[width][height];
-        gridTypes = new GridCellType[width][height];
+        this(41, 41);
+    }
+
+    public GridData(int width, int height) {
+        this.width = Math.max(1, width);
+        this.height = Math.max(1, height);
+        gridColors = new Color[this.width][this.height];
+        gridTypes = new GridCellType[this.width][this.height];
         clearGrid();
     }
 

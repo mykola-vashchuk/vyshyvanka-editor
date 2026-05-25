@@ -3,13 +3,14 @@ package ukma.edu.ua.vyshyvankaeditor.controller;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.control.SpinnerValueFactory;
 import ukma.edu.ua.vyshyvankaeditor.model.GridCellType;
 import ukma.edu.ua.vyshyvankaeditor.model.GridData;
 import ukma.edu.ua.vyshyvankaeditor.model.NameGenerator;
 import ukma.edu.ua.vyshyvankaeditor.view.EditorUI;
 
 public class EditorController {
-    private final GridData model;
+    private GridData model;
     private final EditorUI view;
 
     public EditorController(GridData model, EditorUI view) {
@@ -29,6 +30,22 @@ public class EditorController {
             model.clearGrid();
             redrawWholeGrid();
         });
+
+        view.getApplySizeButton().setOnAction(event -> {
+            int newWidth = view.getGridWidthSpinner().getValue();
+            int newHeight = view.getGridHeightSpinner().getValue();
+            model = new GridData(newWidth, newHeight);
+            view.setGridSize(newWidth, newHeight);
+            view.getPatternWidthSpinner().setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, newWidth, Math.min(7, newWidth))
+            );
+            view.getPatternHeightSpinner().setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, newHeight, Math.min(7, newHeight))
+            );
+            redrawWholeGrid();
+        });
+
+        view.getDuplicateButton().setOnAction(event -> duplicatePattern());
 
         view.getSaveButton().setOnAction(event -> {
             javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
@@ -110,6 +127,45 @@ public class EditorController {
                 }
             }
         });
+    }
+
+    private void duplicatePattern() {
+        int patternWidth = Math.max(1, view.getPatternWidthSpinner().getValue());
+        int patternHeight = Math.max(1, view.getPatternHeightSpinner().getValue());
+
+        patternWidth = Math.min(patternWidth, model.getWidth());
+        patternHeight = Math.min(patternHeight, model.getHeight());
+
+        Color[][] baseColors = new Color[patternWidth][patternHeight];
+        GridCellType[][] baseTypes = new GridCellType[patternWidth][patternHeight];
+
+        for (int x = 0; x < patternWidth; x++) {
+            for (int y = 0; y < patternHeight; y++) {
+                baseColors[x][y] = model.getCellColor(x, y);
+                baseTypes[x][y] = model.getCellType(x, y);
+            }
+        }
+
+        boolean mirrorHorizontally = view.getHorSymetry().isSelected();
+        boolean mirrorVertically = view.getVerSymetry().isSelected();
+
+        for (int x = 0; x < model.getWidth(); x++) {
+            for (int y = 0; y < model.getHeight(); y++) {
+                int sourceX = x % patternWidth;
+                int sourceY = y % patternHeight;
+
+                if (mirrorHorizontally) {
+                    sourceX = patternWidth - 1 - sourceX;
+                }
+                if (mirrorVertically) {
+                    sourceY = patternHeight - 1 - sourceY;
+                }
+
+                model.setCell(x, y, baseColors[sourceX][sourceY], baseTypes[sourceX][sourceY]);
+            }
+        }
+
+        redrawWholeGrid();
     }
 
     private void handleCanvasClick(MouseEvent event) {
