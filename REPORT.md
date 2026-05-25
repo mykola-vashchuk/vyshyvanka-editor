@@ -54,6 +54,11 @@
 - горизонтальна та вертикальна симетрія;
 - зміна розміру сітки (W × H) через панель керування;
 - дублювання фрагмента орнаменту з опційною симетрією;
+- масштабування полотна (zoom in/out);
+- панорама полотна (зсув вліво/вправо/вгору/вниз);
+- скидання масштабу і позиції;
+- прокрутка панелі інструментів;
+- кнопка для приховування/показу панелі;
 - очищення сітки;
 - збереження поточної схеми у PNG;
 - імпорт PNG-зображення назад у програму;
@@ -84,6 +89,8 @@
 - підтримка симетрії;
 - зміна розміру сітки;
 - дублювання фрагмента орнаменту;
+- масштабування та панорама полотна;
+- приховування/показ панелі інструментів;
 - очищення сітки;
 - збереження схеми у PNG;
 - імпорт PNG-файлу;
@@ -92,6 +99,7 @@
 ## `EditorUI`
 Клас представлення. Відповідає за побудову графічного інтерфейсу:
 - ліву панель інструментів;
+- `ScrollPane` для прокрутки панелі;
 - `Canvas` для малювання;
 - кнопки керування;
 - `ColorPicker`;
@@ -99,6 +107,8 @@
 - `Spinner` для зміни розміру сітки;
 - `Spinner` для розміру фрагмента;
 - `Button` для дублювання фрагмента;
+- `Button` для масштабування і панорами;
+- `Button` для приховування/показу панелі;
 - `CheckBox` для симетрії.
 
 ## `GridData`
@@ -144,6 +154,7 @@ classDiagram
     class EditorUI {
         -BorderPane root
         -Canvas canvas
+        -ScrollPane toolbarScroll
         -ColorPicker colorPicker
         -ComboBox<GridCellType> cellTypePicker
         -Spinner<Integer> gridWidthSpinner
@@ -157,6 +168,14 @@ classDiagram
         -Button importButton
         -Button applySizeButton
         -Button duplicateButton
+        -Button zoomInButton
+        -Button zoomOutButton
+        -Button panUpButton
+        -Button panDownButton
+        -Button panLeftButton
+        -Button panRightButton
+        -Button resetViewButton
+        -Button toggleSidebarButton
         +getRoot()
         +getCanvas()
         +getColorPicker()
@@ -248,11 +267,19 @@ classDiagram
 - розніс логіку за MVC (Model/View/Controller);
 - поступово додав нові елементи й перевіряв роботу після кожної зміни.
 
+## 5.7. Панель інструментів не вміщалася у вікно
+Через збільшену кількість контролів частина кнопок не була доступна.
+
+**Розв’язання:**
+- додано `ScrollPane` для панелі інструментів;
+- додано кнопку приховування/показу панелі.
+
 ---
 
 # 6. Список комітів / код
 
 ## Останні коміти з репозиторію
+`3826d17` — `feat: implement sidebar toggle, zoom, and pan functionality in EditorController and EditorUI`
 `5734880` — `feat: add grid size adjustment and pattern duplication functionality in EditorController and EditorUI`
 `66b93d8` — `feat: add cell type selection functionality in EditorUI and update drawing logic in EditorController`
 `adb2bb1` — `feat: add save and import functionality for PNG files in EditorController && test everything`
@@ -271,6 +298,8 @@ classDiagram
 - типи стібка (CROSS_STITCH / FILLED_SQUARE);
 - зміна розміру сітки;
 - дублювання фрагмента орнаменту;
+- масштабування і панорама полотна;
+- приховування/показ панелі інструментів;
 - генерація орнаменту імені;
 - експорт PNG;
 - імпорт PNG;
