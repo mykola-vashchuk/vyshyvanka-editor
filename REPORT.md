@@ -82,6 +82,8 @@
 - обробка кліків мишкою по полотну;
 - малювання клітинок;
 - підтримка симетрії;
+- зміна розміру сітки;
+- дублювання фрагмента орнаменту;
 - очищення сітки;
 - збереження схеми у PNG;
 - імпорт PNG-файлу;
@@ -93,6 +95,10 @@
 - `Canvas` для малювання;
 - кнопки керування;
 - `ColorPicker`;
+- `ComboBox` для вибору типу стібка;
+- `Spinner` для зміни розміру сітки;
+- `Spinner` для розміру фрагмента;
+- `Button` для дублювання фрагмента;
 - `CheckBox` для симетрії.
 
 ## `GridData`
@@ -139,11 +145,18 @@ classDiagram
         -BorderPane root
         -Canvas canvas
         -ColorPicker colorPicker
+        -ComboBox<GridCellType> cellTypePicker
+        -Spinner<Integer> gridWidthSpinner
+        -Spinner<Integer> gridHeightSpinner
+        -Spinner<Integer> patternWidthSpinner
+        -Spinner<Integer> patternHeightSpinner
         -CheckBox horSymetry
         -CheckBox verSymetry
         -Button clearButton
         -Button saveButton
         -Button importButton
+        -Button applySizeButton
+        -Button duplicateButton
         +getRoot()
         +getCanvas()
         +getColorPicker()
