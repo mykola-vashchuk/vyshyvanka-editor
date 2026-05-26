@@ -12,27 +12,29 @@
 **Студент 1 курсу НаУКМА**  
 **Факультет Інформатики**    
 **Спеціальність:  
-Інженерія програмного забезпечення, група 4**
+Інженерія програмного забезпечення, група 2**
 
 **Київ - 2026**
 
 ---
 
-# Зміст
+## 1. Зміст та список ілюстрацій
+
+**Зміст:**
 1. Зміст та список ілюстрацій
-2. Опис виконаних завдань
-   2.1. Постановка задачі
-   2.2. Структура програми
-   2.3. Опис методів та класів
-   2.4. Розподіл ролей (для гри)
-   2.5. Інструкція користувача з ілюстраціями
+2. Опис виконаних завдань:
+   * 2.1. Постановка задачі
+   * 2.2. Структура програми
+   * 2.3. Опис методів та класів
+   * 2.4. Розподіл ролей
+   * 2.5. Інструкція користувача з ілюстраціями
 3. UML-діаграма
 4. Опис проблем і способів їх розв’язання
 5. Список комітів / код
-6. Лістинг програмного коду
+6. Лістинг програмного коду та посилання на репозиторій
 7. Висновок
 
-## Список ілюстрацій
+**Список ілюстрацій:**
 1. Головне вікно програми
 2. Приклад симетричного орнаменту
 3. Збереження/імпорт PNG
@@ -40,322 +42,230 @@
 
 ---
 
-# 2. Опис виконаних завдань
+## 2. Опис виконаних завдань
 
-## 2.1. Постановка задачі
+### 2.1. Постановка задачі
 Потрібно було створити JavaFX-додаток для побудови та редагування схем української вишивки. Програма повинна дозволяти користувачу малювати на сітці, задавати колір нитки, вмикати симетрію, очищати поле, а також зберігати та імпортувати зображення у форматі PNG.
 
-Додаткові вимоги:
-- при запуску автоматично генерується схема вишивки імені;
-- користувач може змінювати розміри сітки;
-- є дублювання фрагмента орнаменту з опційною симетрією;
-- є вибір типу стібка та кольору.
+**Додаткові вимоги:**
+* При запуску автоматично генерується схема вишивки імені.
+* Користувач може змінювати розміри сітки.
+* Є дублювання фрагмента орнаменту з опційною симетрією.
+* Є вибір типу стібка та кольору.
 
-## 2.2. Структура програми
-Проєкт реалізовано у вигляді MVC-архітектури:
-- **Model** — `GridData`, `GridCellType`, `NameGenerator` (збереження стану та генерація імені);
-- **View** — `EditorUI` (побудова інтерфейсу);
-- **Controller** — `EditorController` (логіка взаємодії).
+### 2.2. Структура програми
+Проєкт реалізовано у вигляді **MVC-архітектури**:
+* **Model** — `GridData`, `GridCellType`, `NameGenerator` (збереження стану та генерація імені).
+* **View** — `EditorUI` (побудова інтерфейсу).
+* **Controller** — `EditorController` (логіка взаємодії).
 
-Схема запуску:
-- `Launcher` → `MainApp` → ініціалізація `GridData`, `EditorUI`, `EditorController`.
+**Схема запуску:** 
+`Launcher` → `MainApp` → ініціалізація `GridData`, `EditorUI`, `EditorController`.
 
-## 2.3. Опис методів та класів
+### 2.3. Опис методів та класів
 
-### `Launcher`
+**`Launcher`**
 Точка входу в програму. Запускає JavaFX-додаток через `Application.launch(...)`.
 
-### `MainApp`
+**`MainApp`**
 Головний клас JavaFX-застосунку.
-- створює модель `GridData`;
-- створює вигляд `EditorUI`;
-- створює контролер `EditorController`;
-- формує `Scene` і показує вікно.
+* Створює модель `GridData`.
+* Створює вигляд `EditorUI`.
+* Створює контролер `EditorController`.
+* Формує Scene і показує вікно.
 
-### `EditorController`
-Контролер, який зв’язує інтерфейс і модель.
-Виконує такі функції:
-- обробка кліків мишкою по полотну;
-- малювання клітинок;
-- підтримка симетрії;
-- зміна розміру сітки;
-- дублювання фрагмента орнаменту;
-- масштабування та панорама полотна;
-- приховування/показ панелі інструментів;
-- очищення сітки;
-- збереження схеми у PNG;
-- імпорт PNG-файлу;
-- перемальовування всієї сітки після змін.
+**`EditorController`**
+Контролер, який зв’язує інтерфейс і модель. Виконує такі функції:
+* Обробка кліків мишкою по полотну.
+* Малювання клітинок.
+* Підтримка симетрії.
+* Зміна розміру сітки.
+* Дублювання фрагмента орнаменту.
+* Масштабування та панорама полотна.
+* Приховування/показ панелі інструментів.
+* Очищення сітки.
+* Збереження схеми у PNG.
+* Імпорт PNG-файлу.
+* Перемальовування всієї сітки після змін.
 
-### `EditorUI`
+**`EditorUI`**
 Клас представлення. Відповідає за побудову графічного інтерфейсу:
-- ліву панель інструментів;
-- `ScrollPane` для прокрутки панелі;
-- `Canvas` для малювання;
-- кнопки керування;
-- `ColorPicker`;
-- `ComboBox` для вибору типу стібка;
-- `Spinner` для зміни розміру сітки;
-- `Spinner` для розміру фрагмента;
-- `Button` для дублювання фрагмента;
-- `Button` для масштабування і панорами;
-- `Button` для приховування/показу панелі;
-- `CheckBox` для симетрії.
+* Ліву панель інструментів.
+* `ScrollPane` для прокрутки панелі.
+* `Canvas` для малювання.
+* Кнопки керування.
+* `ColorPicker`.
+* `ComboBox` для вибору типу стібка.
+* `Spinner` для зміни розміру сітки.
+* `Spinner` для розміру фрагмента.
+* `Button` для дублювання фрагмента.
+* `Button` для масштабування і панорами.
+* `Button` для приховування/показу панелі.
+* `CheckBox` для симетрії.
 
-### `GridData`
+**`GridData`**
 Модель даних.
-- зберігає кольори клітинок;
-- зберігає тип клітинки;
-- підтримує змінні розміри сітки (задаються користувачем);
-- реалізує очищення та доступ до значень.
+* Зберігає кольори клітинок.
+* Зберігає тип клітинки.
+* Підтримує змінні розміри сітки (задаються користувачем).
+* Реалізує очищення та доступ до значень.
 
-### `GridCellType`
+**`GridCellType`**
 Перелік типів клітинок:
-- `CROSS_STITCH`;
-- `FILLED_SQUARE`.
+* `CROSS_STITCH`
+* `FILLED_SQUARE`
 
-### `NameGenerator`
+**`NameGenerator`**
 Клас для побудови стартового орнаменту імені.
-- містить шаблон символів;
-- переносить шаблон у модель;
-- задає різні кольори та типи клітинок залежно від символу.
+* Містить шаблон символів.
+* Переносить шаблон у модель.
+* Задає різні кольори та типи клітинок залежно від символу.
 
-## 2.4. Розподіл ролей (для гри)
-Проєкт є індивідуальним, тому розподіл ролей **не застосовується**.
+### 2.4. Розподіл ролей
+Проєкт є індивідуальним, тому розподіл ролей не застосовується.
 
-## 2.5. Інструкція користувача з ілюстраціями
+### 2.5. Інструкція користувача з ілюстраціями
 
 **Крок 1. Запуск програми**
-```bash
-./mvnw javafx:run
-```
+* Через клас `Launcher`.
+* Або через команду: `./mvnw javafx:run`.
 
 **Крок 2. Малювання**
-- Оберіть колір у `ColorPicker`.
-- Оберіть тип стібка у `ComboBox`.
-- Клацайте по сітці або тягніть мишкою.
+* Оберіть колір у **ColorPicker**.
+* Оберіть тип стібка у **ComboBox**.
+* Клацайте по сітці або тягніть мишкою.   
+*Ілюстрація 1* <img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-46-50" src="https://github.com/user-attachments/assets/fb42876d-dcff-4297-85ac-483884b40c0e" />
 
-*Ілюстрація 1:* `screenshots/main-window.png`
 
 **Крок 3. Симетрія**
-- Увімкніть чекбокси `Горизонтальна`/`Вертикальна`.
+* Увімкніть чекбокси **Горизонтальна** / **Вертикальна**.
+*Ілюстрація 2* <img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-47-38" src="https://github.com/user-attachments/assets/191d5b65-ad90-4eaa-b1e0-ed5239bd1bd4" />
 
-*Ілюстрація 2:* `screenshots/symmetry.png`
 
 **Крок 4. Зміна розміру**
-- Вкажіть W × H у спінерах, натисніть `Змінити розмір`.
+* Вкажіть `W × H` у спінерах, натисніть **Змінити розмір**.   
+*Ілюстрація 3* <img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-48-41" src="https://github.com/user-attachments/assets/81e9388e-4393-4a9b-8e57-d775754fdc0c" />
 
-*Ілюстрація 3:* `screenshots/resize.png`
 
 **Крок 5. Дублювання фрагмента**
-- Намалюйте фрагмент у верхньому лівому куті.
-- Задайте W × H фрагмента і натисніть `Дублювати фрагмент`.
+* Намалюйте фрагмент у верхньому лівому куті.
+* Задайте `W × H` фрагмента і натисніть **Дублювати фрагмент**.
+*Ілюстрація 4* <img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-49-31" src="https://github.com/user-attachments/assets/bf6bfef7-f24f-4680-872c-9252b504e26e" />
 
-*Ілюстрація 4:* `screenshots/duplicate.png`
 
 **Крок 6. Масштаб і панорама**
-- Кнопки `Збільшити +`, `Зменшити -`, `Вгору/Вниз/Вліво/Вправо`, `Скинути вигляд`.
+* Використовуйте кнопки: **Збільшити +**, **Зменшити -**, **Вгору/Вниз/Вліво/Вправо**, **Скинути вигляд**.   
+*Ілюстрація 5* <img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-50-03" src="https://github.com/user-attachments/assets/b768347a-21e8-40c1-8093-65dc92389d9b" />
 
-*Ілюстрація 5:* `screenshots/zoom-pan.png`
 
 **Крок 7. Збереження та імпорт**
-- `Зберегти PNG` — зберігає поточну схему.
-- `Імпорт PNG` — завантажує PNG назад у сітку.
+* **Зберегти PNG** — зберігає поточну схему.
+* **Імпорт PNG** — завантажує PNG назад у сітку.   
+*Ілюстрація 6* <img width="3124" height="1718" alt="Screenshot From 2026-05-26 10-50-32" src="https://github.com/user-attachments/assets/9c2e581f-089c-4c97-86b4-4fa4fa8560c8" />
+---
 
-*Ілюстрація 6:* `screenshots/import-export.png`
-
-### Коротка інструкція (проза)
-Запустіть програму, оберіть колір нитки та тип стібка, після чого малюйте на сітці клітинок. За потреби увімкніть симетрію, щоб візерунок відображався дзеркально. Розміри сітки можна змінити через поля W × H, а фрагмент орнаменту — дублювати по всій сітці. Для наближення чи панорами використовуйте кнопки масштабу й зсуву. Готову схему збережіть у PNG або імпортуйте зображення назад у програму.
+<img width="3132" height="1724" alt="Screenshot From 2026-05-26 10-51-03" src="https://github.com/user-attachments/assets/9f7bfa30-9ebd-4a3c-8f54-c7853735600c" />
 
 ---
 
-# 3. UML-діаграма
-Нижче наведено спрощену UML-діаграму у форматі Mermaid:
-
-```mermaid
-classDiagram
-    class Launcher {
-        +main(String[] args)
-    }
-
-    class MainApp {
-        +start(Stage stage)
-    }
-
-    class EditorController {
-        -GridData model
-        -EditorUI view
-        +EditorController(GridData, EditorUI)
-        +redrawWholeGrid()
-    }
-
-    class EditorUI {
-        -BorderPane root
-        -Canvas canvas
-        -ScrollPane toolbarScroll
-        -ColorPicker colorPicker
-        -ComboBox<GridCellType> cellTypePicker
-        -Spinner<Integer> gridWidthSpinner
-        -Spinner<Integer> gridHeightSpinner
-        -Spinner<Integer> patternWidthSpinner
-        -Spinner<Integer> patternHeightSpinner
-        -CheckBox horSymetry
-        -CheckBox verSymetry
-        -Button clearButton
-        -Button saveButton
-        -Button importButton
-        -Button applySizeButton
-        -Button duplicateButton
-        -Button zoomInButton
-        -Button zoomOutButton
-        -Button panUpButton
-        -Button panDownButton
-        -Button panLeftButton
-        -Button panRightButton
-        -Button resetViewButton
-        -Button toggleSidebarButton
-        +getRoot()
-        +getCanvas()
-        +getColorPicker()
-        +getClearButton()
-        +getSaveButton()
-        +getImportButton()
-        +getHorSymetry()
-        +getVerSymetry()
-    }
-
-    class GridData {
-        -int width
-        -int height
-        -Color[][] gridColors
-        -GridCellType[][] gridTypes
-        +clearGrid()
-        +setCell(int, int, Color, GridCellType)
-        +getCellColor(int, int)
-        +getCellType(int, int)
-        +getWidth()
-        +getHeight()
-    }
-
-    class GridCellType {
-        <<enumeration>>
-        CROSS_STITCH
-        FILLED_SQUARE
-    }
-
-    class NameGenerator {
-        +applyNamePattern(GridData)
-    }
-
-    Launcher --> MainApp
-    MainApp --> EditorController
-    MainApp --> EditorUI
-    EditorController --> GridData
-    EditorController --> EditorUI
-    NameGenerator --> GridData
-    GridData --> GridCellType
-```
+<img width="3124" height="1704" alt="Screenshot From 2026-05-26 10-51-39" src="https://github.com/user-attachments/assets/b4119273-2ed1-431a-8762-c8eefbaf5b94" />
 
 ---
 
-# 4. Опис проблем і способів їх розв’язання
+<img width="330" height="480" alt="test8" src="https://github.com/user-attachments/assets/aaa30ef3-fd8f-4fd7-8fd5-7a693c7a8e73" />
 
-## 4.1. Відсутність `javac`
+---
+
+**Коротка інструкція:**
+Запустіть програму, оберіть колір нитки та тип стібка, після чого малюйте на сітці клітинок. За потреби увімкніть симетрію, щоб візерунок відображався дзеркально. Розміри сітки можна змінити через поля `W × H`, а фрагмент орнаменту — дублювати по всій сітці. Для наближення чи панорами використовуйте кнопки масштабу й зсуву. Готову схему збережіть у PNG або імпортуйте зображення назад у програму.
+
+---
+
+## 3. UML-діаграма
+
+Нижче наведено спрощену UML-діаграму:
+*(Місце для графічної UML-діаграми)*
+
+---
+
+## 4. Опис проблем і способів їх розв’язання
+
+### 4.1. Відсутність `javac`
 Спочатку в системі був встановлений лише runtime Java, але не JDK. Через це Maven не міг компілювати проєкт.
+* **Розв’язання:** Встановлено пакет `java-25-openjdk-devel`; після цього з’явився компілятор `javac`, і збірка через Maven стала успішною.
 
-**Розв’язання:**
-- встановлено пакет `java-25-openjdk-devel`;
-- після цього з’явився компілятор `javac`;
-- збірка через Maven стала успішною.
-
-## 4.2. Неправильний модуль JavaFX
+### 4.2. Неправильний модуль JavaFX
 Для збереження PNG використовувався `SwingFXUtils`, а модуль JavaFX Swing був підключений некоректно.
+* **Розв’язання:** У `module-info.java` та `pom.xml` було приведено залежності до правильного стану. Проєкт успішно компілюється.
 
-**Розв’язання:**
-- у `module-info.java` та `pom.xml` було приведено залежності до правильного стану;
-- проєкт успішно компілюється.
-
-## 4.3. Імпорт PNG відкривав не той діалог
+### 4.3. Імпорт PNG відкривав не той діалог
 Спочатку для імпорту використовувався діалог збереження замість діалогу відкриття.
+* **Розв’язання:** Замінено `showSaveDialog(...)` на `showOpenDialog(...)`; додано фільтр PNG; перевірено, що файл читається коректно.
 
-**Розв’язання:**
-- замінено `showSaveDialog(...)` на `showOpenDialog(...)`;
-- додано фільтр PNG;
-- перевірено, що файл читається коректно.
-
-## 4.4. Невизначена стартова папка у `FileChooser`
+### 4.4. Невизначена стартова папка у `FileChooser`
 Користувачу було складно знайти PNG-файли, бо діалог відкривався не в тій директорії.
+* **Розв’язання:** Додано початкову директорію для `FileChooser`. Діалог відкривається в папці проєкту, де лежить тестовий PNG.
 
-**Розв’язання:**
-- додано початкову директорію для `FileChooser`;
-- діалог відкривається в папці проєкту, де лежить тестовий PNG.
-
-## 4.5. Дрібні warning’и у коді
+### 4.5. Дрібні warning’и у коді
 Було кілька попереджень про невикористані методи та змінні.
+* **Розв’язання:** Прибрано зайві елементи, завдяки чому код став чистішим і зрозумілішим.
 
-**Розв’язання:**
-- прибрано зайві елементи;
-- код став чистішим і зрозумілішим.
-
-## 4.6. Перші труднощі з JavaFX
+### 4.6. Перші труднощі з JavaFX
 На початку було складно розібратися з JavaFX-компонентами, обробниками подій та побудовою UI.
+* **Розв’язання:** Поступово розібрався з базовими контролами (`Canvas`, `ColorPicker`, `Button`, `Spinner`); розніс логіку за MVC; поступово додав нові елементи й перевіряв роботу після кожної зміни.
 
-**Розв’язання:**
-- поступово розібрався з базовими контролами (Canvas, ColorPicker, Button, Spinner);
-- розніс логіку за MVC (Model/View/Controller);
-- поступово додав нові елементи й перевіряв роботу після кожної зміни.
-
-## 4.7. Панель інструментів не вміщалася у вікно
+### 4.7. Панель інструментів не вміщалася у вікно
 Через збільшену кількість контролів частина кнопок не була доступна.
-
-**Розв’язання:**
-- додано `ScrollPane` для панелі інструментів;
-- додано кнопку приховування/показу панелі.
+* **Розв’язання:** Додано `ScrollPane` для панелі інструментів та кнопку приховування/показу панелі.
 
 ---
 
-# 5. Список комітів / код
+## 5. Список комітів / код
 
-## Останні коміти з репозиторію
-`3826d17` — `feat: implement sidebar toggle, zoom, and pan functionality in EditorController and EditorUI`
-`5734880` — `feat: add grid size adjustment and pattern duplication functionality in EditorController and EditorUI`
-`66b93d8` — `feat: add cell type selection functionality in EditorUI and update drawing logic in EditorController`
-`adb2bb1` — `feat: add save and import functionality for PNG files in EditorController && test everything`
-`6ed096c` — `feat: implement 41x41 symmetry grid and precise Mykola embroidery pattern`
-`f7d1333` — `feat: add canvas drag handling and clear grid functionality in EditorController`
-`9b627d1` — `feat: implement canvas click handling and color selection in EditorUI`
-`32b04c0` — `feat: enhance EditorUI with toolbar, canvas, and grid drawing functionality`
-`2a5277e` — `feat: implement initial MVC structure with GridData model, EditorUI view, and EditorController`
-`21ce9fd` — `init: setup JavaFX project and basic MVC structure`
+**Останні коміти з репозиторію:**
+* `3826d17` — feat: implement sidebar toggle, zoom, and pan functionality in EditorController and EditorUI
+* `5734880` — feat: add grid size adjustment and pattern duplication functionality in EditorController and EditorUI
+* `66b93d8` — feat: add cell type selection functionality in EditorUI and update drawing logic in EditorController
+* `adb2bb1` — feat: add save and import functionality for PNG files in EditorController && test everything
+* `6ed096c` — feat: implement 41x41 symmetry grid and precise Mykola embroidery pattern
+* `f7d1333` — feat: add canvas drag handling and clear grid functionality in EditorController
+* `9b627d1` — feat: implement canvas click handling and color selection in EditorUI
+* `32b04c0` — feat: enhance EditorUI with toolbar, canvas, and grid drawing functionality
+* `2a5277e` — feat: implement initial MVC structure with GridData model, EditorUI view, and EditorController
+* `21ce9fd` — init: setup JavaFX project and basic MVC structure
 
-## Що було реалізовано у коді
-- стартова JavaFX-структура проєкту;
-- MVC-архітектура;
-- полотно для малювання;
-- підтримка кольору та симетрії;
-- типи стібка (CROSS_STITCH / FILLED_SQUARE);
-- зміна розміру сітки;
-- дублювання фрагмента орнаменту;
-- масштабування і панорама полотна;
-- приховування/показ панелі інструментів;
-- генерація орнаменту імені;
-- експорт PNG;
-- імпорт PNG;
-- очищення сітки.
-
----
-
-# 6. Лістинг програмного коду
-Нижче наведено перелік основних файлів (повний код у репозиторії):
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/Launcher.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/view/MainApp.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/view/EditorUI.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/controller/EditorController.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/GridData.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/GridCellType.java`
-- `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/NameGenerator.java`
+**Що було реалізовано у коді:**
+* Стартова JavaFX-структура проєкту.
+* MVC-архітектура.
+* Полотно для малювання.
+* Підтримка кольору та симетрії.
+* Типи стібка (`CROSS_STITCH` / `FILLED_SQUARE`).
+* Зміна розміру сітки.
+* Дублювання фрагмента орнаменту.
+* Масштабування і панорама полотна.
+* Приховування/показ панелі інструментів.
+* Генерація орнаменту імені.
+* Експорт та імпорт PNG.
+* Очищення сітки.
 
 ---
 
-# 7. Висновок
+## 6. Лістинг програмного коду та посилання на репозиторій
+
+**URL репозиторію на GitHub:** 
+[https://github.com/mykola-vashchuk/vyshyvanka-editor](https://github.com/mykola-vashchuk/vyshyvanka-editor)
+
+**Перелік основних файлів** *(повний код у репозиторії)*:
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/Launcher.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/view/MainApp.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/view/EditorUI.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/controller/EditorController.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/GridData.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/GridCellType.java`
+* `src/main/java/ukma/edu/ua/vyshyvankaeditor/model/NameGenerator.java`
+
+---
+
+## 7. Висновок
+
 У результаті було створено JavaFX-редактор вишиваних схем із графічним інтерфейсом, підтримкою симетрії, збереженням у PNG та імпортом зображень. Проєкт організовано за принципом MVC, що робить код зрозумілим і зручним для подальшого розвитку.
